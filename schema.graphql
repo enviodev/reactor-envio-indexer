@@ -1,0 +1,23 @@
+type PairFactory_PairCreated {
+  id: ID!
+  token0: String!
+  token1: String!
+  stable: Boolean!
+  pair: String!
+  _4: BigInt!
+}
+
+type RewardsDistributor_CheckpointToken {
+  id: ID!
+  time: BigInt!
+  tokens: BigInt!
+}
+
+type RewardsDistributor_Claimed {
+  id: ID!
+  tokenId: BigInt!
+  amount: BigInt!
+  claim_epoch: BigInt!
+  max_epoch: BigInt!
+}
+
