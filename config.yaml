@@ -17,4 +17,15 @@ networks:
     events:
     - event: CheckpointToken(uint256 time, uint256 tokens)
     - event: Claimed(uint256 tokenId, uint256 amount, uint256 claim_epoch, uint256 max_epoch)
-unordered_multichain_mode: true
+  - name: Pair    
+    handler: src/EventHandlers.ts
+    events:
+    - event: Approval(address indexed owner, address indexed spender, uint256 value)
+    - event: Burn(address indexed sender, uint256 amount0, uint256 amount1, address indexed to)
+    - event: Claim(address indexed sender, address indexed recipient, uint256 amount0, uint256 amount1)
+    - event: EIP712DomainChanged()
+    - event: Fees(address indexed sender, uint256 amount0, uint256 amount1)
+    - event: Mint(address indexed sender, uint256 amount0, uint256 amount1)
+    - event: Swap(address indexed sender, uint256 amount0In, uint256 amount1In, uint256 amount0Out, uint256 amount1Out, address indexed to)
+    - event: Sync(uint256 reserve0, uint256 reserve1)
+    - event: Transfer(address indexed from, address indexed to, uint256 value)    
