@@ -1,29 +1,18 @@
 /*
  * Please refer to https://docs.envio.dev for a thorough guide on all Envio indexer features
  */
-import {
-  PairFactory,
-  PairFactory_PairCreated,
-  RewardsDistributor,
-  RewardsDistributor_CheckpointToken,
-  RewardsDistributor_Claimed,
-  Pair,
-  Pair_Approval,
-  Pair_Burn,
-  Pair_Claim,
-  Pair_EIP712DomainChanged,
-  Pair_Fees,
-  Pair_Mint,
-  Pair_Swap,
-  Pair_Sync,
-  Pair_Transfer,
-} from "generated";
+import { indexer, PairFactory_PairCreated, RewardsDistributor_CheckpointToken, RewardsDistributor_Claimed, Pair, Pair_Approval, Pair_Burn, Pair_Claim, Pair_EIP712DomainChanged, Pair_Fees, Pair_Mint, Pair_Swap, Pair_Sync, Pair_Transfer } from "envio";
 
-PairFactory.PairCreated.contractRegister(async ({ event, context }) => {
-  context.addPair(event.params.pair)
-});
+indexer.contractRegister(
+  { contract: "PairFactory", event: "PairCreated" },
+  async ({ event, context }) => {
+  context.chain.Pair.add(event.params.pair)
+}
+);
 
-PairFactory.PairCreated.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "PairFactory", event: "PairCreated" },
+  async ({ event, context }) => {
   const entity: PairFactory_PairCreated = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     token0: event.params.token0,
@@ -34,9 +23,12 @@ PairFactory.PairCreated.handler(async ({ event, context }) => {
   };
 
   context.PairFactory_PairCreated.set(entity);
-});
+}
+);
 
-RewardsDistributor.CheckpointToken.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "RewardsDistributor", event: "CheckpointToken" },
+  async ({ event, context }) => {
   const entity: RewardsDistributor_CheckpointToken = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     time: event.params.time,
@@ -44,9 +36,12 @@ RewardsDistributor.CheckpointToken.handler(async ({ event, context }) => {
   };
 
   context.RewardsDistributor_CheckpointToken.set(entity);
-});
+}
+);
 
-RewardsDistributor.Claimed.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "RewardsDistributor", event: "Claimed" },
+  async ({ event, context }) => {
   const entity: RewardsDistributor_Claimed = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     tokenId: event.params.tokenId,
@@ -56,9 +51,12 @@ RewardsDistributor.Claimed.handler(async ({ event, context }) => {
   };
 
   context.RewardsDistributor_Claimed.set(entity);
-});
+}
+);
 
-Pair.Approval.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "Pair", event: "Approval" },
+  async ({ event, context }) => {
   const entity: Pair_Approval = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     owner: event.params.owner,
@@ -67,9 +65,12 @@ Pair.Approval.handler(async ({ event, context }) => {
   };
 
   context.Pair_Approval.set(entity);
-});
+}
+);
 
-Pair.Burn.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "Pair", event: "Burn" },
+  async ({ event, context }) => {
   const entity: Pair_Burn = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     sender: event.params.sender,
@@ -79,9 +80,12 @@ Pair.Burn.handler(async ({ event, context }) => {
   };
 
   context.Pair_Burn.set(entity);
-});
+}
+);
 
-Pair.Claim.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "Pair", event: "Claim" },
+  async ({ event, context }) => {
   const entity: Pair_Claim = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     sender: event.params.sender,
@@ -91,17 +95,23 @@ Pair.Claim.handler(async ({ event, context }) => {
   };
 
   context.Pair_Claim.set(entity);
-});
+}
+);
 
-Pair.EIP712DomainChanged.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "Pair", event: "EIP712DomainChanged" },
+  async ({ event, context }) => {
   const entity: Pair_EIP712DomainChanged = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
   };
 
   context.Pair_EIP712DomainChanged.set(entity);
-});
+}
+);
 
-Pair.Fees.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "Pair", event: "Fees" },
+  async ({ event, context }) => {
   const entity: Pair_Fees = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     sender: event.params.sender,
@@ -110,9 +120,12 @@ Pair.Fees.handler(async ({ event, context }) => {
   };
 
   context.Pair_Fees.set(entity);
-});
+}
+);
 
-Pair.Mint.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "Pair", event: "Mint" },
+  async ({ event, context }) => {
   const entity: Pair_Mint = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     sender: event.params.sender,
@@ -121,9 +134,12 @@ Pair.Mint.handler(async ({ event, context }) => {
   };
 
   context.Pair_Mint.set(entity);
-});
+}
+);
 
-Pair.Swap.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "Pair", event: "Swap" },
+  async ({ event, context }) => {
   const entity: Pair_Swap = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     sender: event.params.sender,
@@ -135,9 +151,12 @@ Pair.Swap.handler(async ({ event, context }) => {
   };
 
   context.Pair_Swap.set(entity);
-});
+}
+);
 
-Pair.Sync.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "Pair", event: "Sync" },
+  async ({ event, context }) => {
   const entity: Pair_Sync = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     reserve0: event.params.reserve0,
@@ -145,9 +164,12 @@ Pair.Sync.handler(async ({ event, context }) => {
   };
 
   context.Pair_Sync.set(entity);
-});
+}
+);
 
-Pair.Transfer.handler(async ({ event, context }) => {
+indexer.onEvent(
+  { contract: "Pair", event: "Transfer" },
+  async ({ event, context }) => {
   const entity: Pair_Transfer = {
     id: `${event.chainId}_${event.block.number}_${event.logIndex}`,
     from: event.params.from,
@@ -156,4 +178,5 @@ Pair.Transfer.handler(async ({ event, context }) => {
   };
 
   context.Pair_Transfer.set(entity);
-});
+}
+);
